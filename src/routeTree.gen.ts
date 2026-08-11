@@ -21,7 +21,9 @@ import { Route as SobreRouteImport } from './routes/sobre'
 import { Route as TermosRouteImport } from './routes/termos'
 import { Route as AppIndexRouteImport } from './routes/app.index'
 import { Route as AppDiarioRouteImport } from './routes/app.diario'
+import { Route as AppMensagensRouteImport } from './routes/app.mensagens'
 import { Route as AppPerfilRouteImport } from './routes/app.perfil'
+import { Route as AppProfissionalRouteImport } from './routes/app.profissional'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -83,9 +85,19 @@ const AppDiarioRoute = AppDiarioRouteImport.update({
   path: '/diario',
   getParentRoute: () => AppRoute,
 } as any)
+const AppMensagensRoute = AppMensagensRouteImport.update({
+  id: '/mensagens',
+  path: '/mensagens',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppPerfilRoute = AppPerfilRouteImport.update({
   id: '/perfil',
   path: '/perfil',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppProfissionalRoute = AppProfissionalRouteImport.update({
+  id: '/profissional',
+  path: '/profissional',
   getParentRoute: () => AppRoute,
 } as any)
 
@@ -101,7 +113,9 @@ export interface FileRoutesByFullPath {
   '/sobre': typeof SobreRoute
   '/termos': typeof TermosRoute
   '/app/diario': typeof AppDiarioRoute
+  '/app/mensagens': typeof AppMensagensRoute
   '/app/perfil': typeof AppPerfilRoute
+  '/app/profissional': typeof AppProfissionalRoute
   '/app/': typeof AppIndexRoute
 }
 export interface FileRoutesByTo {
@@ -115,7 +129,9 @@ export interface FileRoutesByTo {
   '/sobre': typeof SobreRoute
   '/termos': typeof TermosRoute
   '/app/diario': typeof AppDiarioRoute
+  '/app/mensagens': typeof AppMensagensRoute
   '/app/perfil': typeof AppPerfilRoute
+  '/app/profissional': typeof AppProfissionalRoute
   '/app': typeof AppIndexRoute
 }
 export interface FileRoutesById {
@@ -131,7 +147,9 @@ export interface FileRoutesById {
   '/sobre': typeof SobreRoute
   '/termos': typeof TermosRoute
   '/app/diario': typeof AppDiarioRoute
+  '/app/mensagens': typeof AppMensagensRoute
   '/app/perfil': typeof AppPerfilRoute
+  '/app/profissional': typeof AppProfissionalRoute
   '/app/': typeof AppIndexRoute
 }
 export interface FileRouteTypes {
@@ -148,7 +166,9 @@ export interface FileRouteTypes {
     | '/sobre'
     | '/termos'
     | '/app/diario'
+    | '/app/mensagens'
     | '/app/perfil'
+    | '/app/profissional'
     | '/app/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -162,7 +182,9 @@ export interface FileRouteTypes {
     | '/sobre'
     | '/termos'
     | '/app/diario'
+    | '/app/mensagens'
     | '/app/perfil'
+    | '/app/profissional'
     | '/app'
   id:
     | '__root__'
@@ -177,7 +199,9 @@ export interface FileRouteTypes {
     | '/sobre'
     | '/termos'
     | '/app/diario'
+    | '/app/mensagens'
     | '/app/perfil'
+    | '/app/profissional'
     | '/app/'
   fileRoutesById: FileRoutesById
 }
@@ -280,6 +304,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppDiarioRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/mensagens': {
+      id: '/app/mensagens'
+      path: '/mensagens'
+      fullPath: '/app/mensagens'
+      preLoaderRoute: typeof AppMensagensRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/app/perfil': {
       id: '/app/perfil'
       path: '/perfil'
@@ -287,18 +318,29 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppPerfilRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/profissional': {
+      id: '/app/profissional'
+      path: '/profissional'
+      fullPath: '/app/profissional'
+      preLoaderRoute: typeof AppProfissionalRouteImport
+      parentRoute: typeof AppRoute
+    }
   }
 }
 
 interface AppRouteChildren {
   AppDiarioRoute: typeof AppDiarioRoute
+  AppMensagensRoute: typeof AppMensagensRoute
   AppPerfilRoute: typeof AppPerfilRoute
+  AppProfissionalRoute: typeof AppProfissionalRoute
   AppIndexRoute: typeof AppIndexRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
   AppDiarioRoute: AppDiarioRoute,
+  AppMensagensRoute: AppMensagensRoute,
   AppPerfilRoute: AppPerfilRoute,
+  AppProfissionalRoute: AppProfissionalRoute,
   AppIndexRoute: AppIndexRoute,
 }
 
