@@ -338,9 +338,9 @@ function Field({
   label: string;
   name: string;
   type?: string;
-  error?: string;
-  hint?: string;
-  autoComplete?: string;
+  error?: string | undefined;
+  hint?: string | undefined;
+  autoComplete?: string | undefined;
 }) {
   return (
     <div className="space-y-2">
