@@ -15,11 +15,13 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as ContatoRouteImport } from './routes/contato'
 import { Route as OnboardingRouteImport } from './routes/onboarding'
 import { Route as PrivacidadeRouteImport } from './routes/privacidade'
+import { Route as ProRouteImport } from './routes/pro'
 import { Route as RecuperarSenhaRouteImport } from './routes/recuperar-senha'
 import { Route as RedefinirSenhaRouteImport } from './routes/redefinir-senha'
 import { Route as SobreRouteImport } from './routes/sobre'
 import { Route as TermosRouteImport } from './routes/termos'
 import { Route as AppIndexRouteImport } from './routes/app.index'
+import { Route as AppConfiguracoesRouteImport } from './routes/app.configuracoes'
 import { Route as AppDiarioRouteImport } from './routes/app.diario'
 import { Route as AppMensagensRouteImport } from './routes/app.mensagens'
 import { Route as AppPerfilRouteImport } from './routes/app.perfil'
@@ -55,6 +57,11 @@ const PrivacidadeRoute = PrivacidadeRouteImport.update({
   path: '/privacidade',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ProRoute = ProRouteImport.update({
+  id: '/pro',
+  path: '/pro',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const RecuperarSenhaRoute = RecuperarSenhaRouteImport.update({
   id: '/recuperar-senha',
   path: '/recuperar-senha',
@@ -78,6 +85,11 @@ const TermosRoute = TermosRouteImport.update({
 const AppIndexRoute = AppIndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppConfiguracoesRoute = AppConfiguracoesRouteImport.update({
+  id: '/configuracoes',
+  path: '/configuracoes',
   getParentRoute: () => AppRoute,
 } as any)
 const AppDiarioRoute = AppDiarioRouteImport.update({
@@ -108,10 +120,12 @@ export interface FileRoutesByFullPath {
   '/contato': typeof ContatoRoute
   '/onboarding': typeof OnboardingRoute
   '/privacidade': typeof PrivacidadeRoute
+  '/pro': typeof ProRoute
   '/recuperar-senha': typeof RecuperarSenhaRoute
   '/redefinir-senha': typeof RedefinirSenhaRoute
   '/sobre': typeof SobreRoute
   '/termos': typeof TermosRoute
+  '/app/configuracoes': typeof AppConfiguracoesRoute
   '/app/diario': typeof AppDiarioRoute
   '/app/mensagens': typeof AppMensagensRoute
   '/app/perfil': typeof AppPerfilRoute
@@ -124,10 +138,12 @@ export interface FileRoutesByTo {
   '/contato': typeof ContatoRoute
   '/onboarding': typeof OnboardingRoute
   '/privacidade': typeof PrivacidadeRoute
+  '/pro': typeof ProRoute
   '/recuperar-senha': typeof RecuperarSenhaRoute
   '/redefinir-senha': typeof RedefinirSenhaRoute
   '/sobre': typeof SobreRoute
   '/termos': typeof TermosRoute
+  '/app/configuracoes': typeof AppConfiguracoesRoute
   '/app/diario': typeof AppDiarioRoute
   '/app/mensagens': typeof AppMensagensRoute
   '/app/perfil': typeof AppPerfilRoute
@@ -142,10 +158,12 @@ export interface FileRoutesById {
   '/contato': typeof ContatoRoute
   '/onboarding': typeof OnboardingRoute
   '/privacidade': typeof PrivacidadeRoute
+  '/pro': typeof ProRoute
   '/recuperar-senha': typeof RecuperarSenhaRoute
   '/redefinir-senha': typeof RedefinirSenhaRoute
   '/sobre': typeof SobreRoute
   '/termos': typeof TermosRoute
+  '/app/configuracoes': typeof AppConfiguracoesRoute
   '/app/diario': typeof AppDiarioRoute
   '/app/mensagens': typeof AppMensagensRoute
   '/app/perfil': typeof AppPerfilRoute
@@ -161,10 +179,12 @@ export interface FileRouteTypes {
     | '/contato'
     | '/onboarding'
     | '/privacidade'
+    | '/pro'
     | '/recuperar-senha'
     | '/redefinir-senha'
     | '/sobre'
     | '/termos'
+    | '/app/configuracoes'
     | '/app/diario'
     | '/app/mensagens'
     | '/app/perfil'
@@ -177,10 +197,12 @@ export interface FileRouteTypes {
     | '/contato'
     | '/onboarding'
     | '/privacidade'
+    | '/pro'
     | '/recuperar-senha'
     | '/redefinir-senha'
     | '/sobre'
     | '/termos'
+    | '/app/configuracoes'
     | '/app/diario'
     | '/app/mensagens'
     | '/app/perfil'
@@ -194,10 +216,12 @@ export interface FileRouteTypes {
     | '/contato'
     | '/onboarding'
     | '/privacidade'
+    | '/pro'
     | '/recuperar-senha'
     | '/redefinir-senha'
     | '/sobre'
     | '/termos'
+    | '/app/configuracoes'
     | '/app/diario'
     | '/app/mensagens'
     | '/app/perfil'
@@ -212,6 +236,7 @@ export interface RootRouteChildren {
   ContatoRoute: typeof ContatoRoute
   OnboardingRoute: typeof OnboardingRoute
   PrivacidadeRoute: typeof PrivacidadeRoute
+  ProRoute: typeof ProRoute
   RecuperarSenhaRoute: typeof RecuperarSenhaRoute
   RedefinirSenhaRoute: typeof RedefinirSenhaRoute
   SobreRoute: typeof SobreRoute
@@ -262,6 +287,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrivacidadeRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/pro': {
+      id: '/pro'
+      path: '/pro'
+      fullPath: '/pro'
+      preLoaderRoute: typeof ProRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/recuperar-senha': {
       id: '/recuperar-senha'
       path: '/recuperar-senha'
@@ -297,6 +329,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppIndexRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/configuracoes': {
+      id: '/app/configuracoes'
+      path: '/configuracoes'
+      fullPath: '/app/configuracoes'
+      preLoaderRoute: typeof AppConfiguracoesRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/app/diario': {
       id: '/app/diario'
       path: '/diario'
@@ -329,6 +368,7 @@ declare module '@tanstack/react-router' {
 }
 
 interface AppRouteChildren {
+  AppConfiguracoesRoute: typeof AppConfiguracoesRoute
   AppDiarioRoute: typeof AppDiarioRoute
   AppMensagensRoute: typeof AppMensagensRoute
   AppPerfilRoute: typeof AppPerfilRoute
@@ -337,6 +377,7 @@ interface AppRouteChildren {
 }
 
 const AppRouteChildren: AppRouteChildren = {
+  AppConfiguracoesRoute: AppConfiguracoesRoute,
   AppDiarioRoute: AppDiarioRoute,
   AppMensagensRoute: AppMensagensRoute,
   AppPerfilRoute: AppPerfilRoute,
@@ -353,6 +394,7 @@ const rootRouteChildren: RootRouteChildren = {
   ContatoRoute: ContatoRoute,
   OnboardingRoute: OnboardingRoute,
   PrivacidadeRoute: PrivacidadeRoute,
+  ProRoute: ProRoute,
   RecuperarSenhaRoute: RecuperarSenhaRoute,
   RedefinirSenhaRoute: RedefinirSenhaRoute,
   SobreRoute: SobreRoute,
