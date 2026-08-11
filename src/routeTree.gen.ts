@@ -26,6 +26,8 @@ import { Route as AppDiarioRouteImport } from './routes/app.diario'
 import { Route as AppMensagensRouteImport } from './routes/app.mensagens'
 import { Route as AppPerfilRouteImport } from './routes/app.perfil'
 import { Route as AppProfissionalRouteImport } from './routes/app.profissional'
+import { Route as ProIndexRouteImport } from './routes/pro.index'
+import { Route as ProPacientesRouteImport } from './routes/pro.pacientes'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -112,6 +114,16 @@ const AppProfissionalRoute = AppProfissionalRouteImport.update({
   path: '/profissional',
   getParentRoute: () => AppRoute,
 } as any)
+const ProIndexRoute = ProIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => ProRoute,
+} as any)
+const ProPacientesRoute = ProPacientesRouteImport.update({
+  id: '/pacientes',
+  path: '/pacientes',
+  getParentRoute: () => ProRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -120,7 +132,7 @@ export interface FileRoutesByFullPath {
   '/contato': typeof ContatoRoute
   '/onboarding': typeof OnboardingRoute
   '/privacidade': typeof PrivacidadeRoute
-  '/pro': typeof ProRoute
+  '/pro': typeof ProRouteWithChildren
   '/recuperar-senha': typeof RecuperarSenhaRoute
   '/redefinir-senha': typeof RedefinirSenhaRoute
   '/sobre': typeof SobreRoute
@@ -130,7 +142,9 @@ export interface FileRoutesByFullPath {
   '/app/mensagens': typeof AppMensagensRoute
   '/app/perfil': typeof AppPerfilRoute
   '/app/profissional': typeof AppProfissionalRoute
+  '/pro/pacientes': typeof ProPacientesRoute
   '/app/': typeof AppIndexRoute
+  '/pro/': typeof ProIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -138,7 +152,6 @@ export interface FileRoutesByTo {
   '/contato': typeof ContatoRoute
   '/onboarding': typeof OnboardingRoute
   '/privacidade': typeof PrivacidadeRoute
-  '/pro': typeof ProRoute
   '/recuperar-senha': typeof RecuperarSenhaRoute
   '/redefinir-senha': typeof RedefinirSenhaRoute
   '/sobre': typeof SobreRoute
@@ -148,7 +161,9 @@ export interface FileRoutesByTo {
   '/app/mensagens': typeof AppMensagensRoute
   '/app/perfil': typeof AppPerfilRoute
   '/app/profissional': typeof AppProfissionalRoute
+  '/pro/pacientes': typeof ProPacientesRoute
   '/app': typeof AppIndexRoute
+  '/pro': typeof ProIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -158,7 +173,7 @@ export interface FileRoutesById {
   '/contato': typeof ContatoRoute
   '/onboarding': typeof OnboardingRoute
   '/privacidade': typeof PrivacidadeRoute
-  '/pro': typeof ProRoute
+  '/pro': typeof ProRouteWithChildren
   '/recuperar-senha': typeof RecuperarSenhaRoute
   '/redefinir-senha': typeof RedefinirSenhaRoute
   '/sobre': typeof SobreRoute
@@ -168,7 +183,9 @@ export interface FileRoutesById {
   '/app/mensagens': typeof AppMensagensRoute
   '/app/perfil': typeof AppPerfilRoute
   '/app/profissional': typeof AppProfissionalRoute
+  '/pro/pacientes': typeof ProPacientesRoute
   '/app/': typeof AppIndexRoute
+  '/pro/': typeof ProIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -189,7 +206,9 @@ export interface FileRouteTypes {
     | '/app/mensagens'
     | '/app/perfil'
     | '/app/profissional'
+    | '/pro/pacientes'
     | '/app/'
+    | '/pro/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -197,7 +216,6 @@ export interface FileRouteTypes {
     | '/contato'
     | '/onboarding'
     | '/privacidade'
-    | '/pro'
     | '/recuperar-senha'
     | '/redefinir-senha'
     | '/sobre'
@@ -207,7 +225,9 @@ export interface FileRouteTypes {
     | '/app/mensagens'
     | '/app/perfil'
     | '/app/profissional'
+    | '/pro/pacientes'
     | '/app'
+    | '/pro'
   id:
     | '__root__'
     | '/'
@@ -226,7 +246,9 @@ export interface FileRouteTypes {
     | '/app/mensagens'
     | '/app/perfil'
     | '/app/profissional'
+    | '/pro/pacientes'
     | '/app/'
+    | '/pro/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -236,7 +258,7 @@ export interface RootRouteChildren {
   ContatoRoute: typeof ContatoRoute
   OnboardingRoute: typeof OnboardingRoute
   PrivacidadeRoute: typeof PrivacidadeRoute
-  ProRoute: typeof ProRoute
+  ProRoute: typeof ProRouteWithChildren
   RecuperarSenhaRoute: typeof RecuperarSenhaRoute
   RedefinirSenhaRoute: typeof RedefinirSenhaRoute
   SobreRoute: typeof SobreRoute
@@ -364,6 +386,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppProfissionalRouteImport
       parentRoute: typeof AppRoute
     }
+    '/pro/': {
+      id: '/pro/'
+      path: '/'
+      fullPath: '/pro/'
+      preLoaderRoute: typeof ProIndexRouteImport
+      parentRoute: typeof ProRoute
+    }
+    '/pro/pacientes': {
+      id: '/pro/pacientes'
+      path: '/pacientes'
+      fullPath: '/pro/pacientes'
+      preLoaderRoute: typeof ProPacientesRouteImport
+      parentRoute: typeof ProRoute
+    }
   }
 }
 
@@ -387,6 +423,18 @@ const AppRouteChildren: AppRouteChildren = {
 
 const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
 
+interface ProRouteChildren {
+  ProPacientesRoute: typeof ProPacientesRoute
+  ProIndexRoute: typeof ProIndexRoute
+}
+
+const ProRouteChildren: ProRouteChildren = {
+  ProPacientesRoute: ProPacientesRoute,
+  ProIndexRoute: ProIndexRoute,
+}
+
+const ProRouteWithChildren = ProRoute._addFileChildren(ProRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AppRoute: AppRouteWithChildren,
@@ -394,7 +442,7 @@ const rootRouteChildren: RootRouteChildren = {
   ContatoRoute: ContatoRoute,
   OnboardingRoute: OnboardingRoute,
   PrivacidadeRoute: PrivacidadeRoute,
-  ProRoute: ProRoute,
+  ProRoute: ProRouteWithChildren,
   RecuperarSenhaRoute: RecuperarSenhaRoute,
   RedefinirSenhaRoute: RedefinirSenhaRoute,
   SobreRoute: SobreRoute,
