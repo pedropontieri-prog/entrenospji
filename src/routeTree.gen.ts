@@ -28,6 +28,8 @@ import { Route as AppPerfilRouteImport } from './routes/app.perfil'
 import { Route as AppProfissionalRouteImport } from './routes/app.profissional'
 import { Route as ProIndexRouteImport } from './routes/pro.index'
 import { Route as ProPacientesRouteImport } from './routes/pro.pacientes'
+import { Route as ProPerfilRouteImport } from './routes/pro.perfil'
+import { Route as ProPacienteIdRouteImport } from './routes/pro.paciente.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -124,6 +126,16 @@ const ProPacientesRoute = ProPacientesRouteImport.update({
   path: '/pacientes',
   getParentRoute: () => ProRoute,
 } as any)
+const ProPerfilRoute = ProPerfilRouteImport.update({
+  id: '/perfil',
+  path: '/perfil',
+  getParentRoute: () => ProRoute,
+} as any)
+const ProPacienteIdRoute = ProPacienteIdRouteImport.update({
+  id: '/paciente/$id',
+  path: '/paciente/$id',
+  getParentRoute: () => ProRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -143,8 +155,10 @@ export interface FileRoutesByFullPath {
   '/app/perfil': typeof AppPerfilRoute
   '/app/profissional': typeof AppProfissionalRoute
   '/pro/pacientes': typeof ProPacientesRoute
+  '/pro/perfil': typeof ProPerfilRoute
   '/app/': typeof AppIndexRoute
   '/pro/': typeof ProIndexRoute
+  '/pro/paciente/$id': typeof ProPacienteIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -162,8 +176,10 @@ export interface FileRoutesByTo {
   '/app/perfil': typeof AppPerfilRoute
   '/app/profissional': typeof AppProfissionalRoute
   '/pro/pacientes': typeof ProPacientesRoute
+  '/pro/perfil': typeof ProPerfilRoute
   '/app': typeof AppIndexRoute
   '/pro': typeof ProIndexRoute
+  '/pro/paciente/$id': typeof ProPacienteIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -184,8 +200,10 @@ export interface FileRoutesById {
   '/app/perfil': typeof AppPerfilRoute
   '/app/profissional': typeof AppProfissionalRoute
   '/pro/pacientes': typeof ProPacientesRoute
+  '/pro/perfil': typeof ProPerfilRoute
   '/app/': typeof AppIndexRoute
   '/pro/': typeof ProIndexRoute
+  '/pro/paciente/$id': typeof ProPacienteIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -207,8 +225,10 @@ export interface FileRouteTypes {
     | '/app/perfil'
     | '/app/profissional'
     | '/pro/pacientes'
+    | '/pro/perfil'
     | '/app/'
     | '/pro/'
+    | '/pro/paciente/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -226,8 +246,10 @@ export interface FileRouteTypes {
     | '/app/perfil'
     | '/app/profissional'
     | '/pro/pacientes'
+    | '/pro/perfil'
     | '/app'
     | '/pro'
+    | '/pro/paciente/$id'
   id:
     | '__root__'
     | '/'
@@ -247,8 +269,10 @@ export interface FileRouteTypes {
     | '/app/perfil'
     | '/app/profissional'
     | '/pro/pacientes'
+    | '/pro/perfil'
     | '/app/'
     | '/pro/'
+    | '/pro/paciente/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -400,6 +424,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProPacientesRouteImport
       parentRoute: typeof ProRoute
     }
+    '/pro/perfil': {
+      id: '/pro/perfil'
+      path: '/perfil'
+      fullPath: '/pro/perfil'
+      preLoaderRoute: typeof ProPerfilRouteImport
+      parentRoute: typeof ProRoute
+    }
+    '/pro/paciente/$id': {
+      id: '/pro/paciente/$id'
+      path: '/paciente/$id'
+      fullPath: '/pro/paciente/$id'
+      preLoaderRoute: typeof ProPacienteIdRouteImport
+      parentRoute: typeof ProRoute
+    }
   }
 }
 
@@ -425,12 +463,16 @@ const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
 
 interface ProRouteChildren {
   ProPacientesRoute: typeof ProPacientesRoute
+  ProPerfilRoute: typeof ProPerfilRoute
   ProIndexRoute: typeof ProIndexRoute
+  ProPacienteIdRoute: typeof ProPacienteIdRoute
 }
 
 const ProRouteChildren: ProRouteChildren = {
   ProPacientesRoute: ProPacientesRoute,
+  ProPerfilRoute: ProPerfilRoute,
   ProIndexRoute: ProIndexRoute,
+  ProPacienteIdRoute: ProPacienteIdRoute,
 }
 
 const ProRouteWithChildren = ProRoute._addFileChildren(ProRouteChildren)
