@@ -114,7 +114,7 @@ export async function fetchMyLink(userId: string) {
   if (!data) return null;
   const { data: professional } = await supabase
     .from("profiles")
-    .select("id, nickname, bio")
+    .select("id, nickname, bio, avatar_url")
     .eq("id", data.professional_id)
     .maybeSingle();
   return { ...data, professional: (professional as PublicProfile) ?? null };
@@ -182,7 +182,7 @@ export async function fetchLinkedUsers(professionalId: string) {
   const ids = (links ?? []).map((link) => link.user_id);
   if (ids.length === 0) return [];
   const [{ data: profiles }, { data: emotional }, { data: messages }] = await Promise.all([
-    supabase.from("profiles").select("id, nickname, bio").in("id", ids),
+    supabase.from("profiles").select("id, nickname, bio, avatar_url").in("id", ids),
     supabase.from("emotional_profiles").select("*").in("user_id", ids),
     supabase
       .from("messages")
