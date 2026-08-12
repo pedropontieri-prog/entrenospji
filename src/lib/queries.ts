@@ -30,9 +30,36 @@ export type PublicProfile = {
   id: string;
   nickname: string;
   bio: string | null;
+  avatar_url: string | null;
 };
 
-export async function fetchProfessionalProfiles(): Promise<PublicProfile[]> {
+export type ProfessionalDetails = {
+  user_id: string;
+  full_name: string | null;
+  specialty: string | null;
+  presentation: string | null;
+  council_registration: string | null;
+  years_experience: number | null;
+  education: string | null;
+  approach: string | null;
+  languages: string | null;
+  city: string | null;
+  state: string | null;
+  online_sessions: boolean;
+  in_person_sessions: boolean;
+  whatsapp: string | null;
+  contact_email: string | null;
+  cv_url: string | null;
+  cv_filename: string | null;
+  show_whatsapp: boolean;
+  show_cv: boolean;
+  show_location: boolean;
+  show_email: boolean;
+};
+
+export type ProfessionalCard = PublicProfile & { details: ProfessionalDetails | null };
+
+export async function fetchProfessionalProfiles(): Promise<ProfessionalCard[]> {
   const { data: roles, error: rolesError } = await supabase
     .from("user_roles")
     .select("user_id")
@@ -40,13 +67,40 @@ export async function fetchProfessionalProfiles(): Promise<PublicProfile[]> {
   if (rolesError) throw rolesError;
   const ids = (roles ?? []).map((row) => row.user_id);
   if (ids.length === 0) return [];
-  const { data, error } = await supabase
-    .from("profiles")
-    .select("id, nickname, bio")
-    .in("id", ids)
-    .order("nickname");
+  const [{ data, error }, { data: details }] = await Promise.all([
+    supabase.from("profiles").select("id, nickname, bio, avatar_url").in("id", ids).order("nickname"),
+    supabase.from("professional_details").select("*").in("user_id", ids),
+  ]);
   if (error) throw error;
-  return (data ?? []) as PublicProfile[];
+  return ((data ?? []) as PublicProfile[]).map((profile) => ({
+    ...profile,
+    details:
+      ((details ?? []) as ProfessionalDetails[]).find((item) => item.user_id === profile.id) ?? null,
+  }));
+}
+
+export async function fetchProfessionalById(id: string): Promise<ProfessionalCard | null> {
+  const [{ data: profile, error }, { data: details }] = await Promise.all([
+    supabase.from("profiles").select("id, nickname, bio, avatar_url").eq("id", id).maybeSingle(),
+    supabase.from("professional_details").select("*").eq("user_id", id).maybeSingle(),
+  ]);
+  if (error) throw error;
+  if (!profile) return null;
+  return {
+    ...(profile as PublicProfile),
+    details: (details as ProfessionalDetails) ?? null,
+  };
+}
+
+export async function fetchMyProfessionalData(userId: string) {
+  const [{ data: details }, { data: privateData }] = await Promise.all([
+    supabase.from("professional_details").select("*").eq("user_id", userId).maybeSingle(),
+    supabase.from("professional_private_data").select("cpf").eq("user_id", userId).maybeSingle(),
+  ]);
+  return {
+    details: (details as ProfessionalDetails) ?? null,
+    cpf: privateData?.cpf ?? "",
+  };
 }
 
 export async function fetchMyLink(userId: string) {
