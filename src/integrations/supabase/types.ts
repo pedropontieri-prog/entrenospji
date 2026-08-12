@@ -95,6 +95,84 @@ export type Database = {
         }
         Relationships: []
       }
+      professional_details: {
+        Row: {
+          approach: string | null
+          city: string | null
+          contact_email: string | null
+          council_registration: string | null
+          created_at: string
+          cv_filename: string | null
+          cv_url: string | null
+          education: string | null
+          full_name: string | null
+          in_person_sessions: boolean
+          languages: string | null
+          online_sessions: boolean
+          presentation: string | null
+          show_cv: boolean
+          show_email: boolean
+          show_location: boolean
+          show_whatsapp: boolean
+          specialty: string | null
+          state: string | null
+          updated_at: string
+          user_id: string
+          whatsapp: string | null
+          years_experience: number | null
+        }
+        Insert: {
+          approach?: string | null
+          city?: string | null
+          contact_email?: string | null
+          council_registration?: string | null
+          created_at?: string
+          cv_filename?: string | null
+          cv_url?: string | null
+          education?: string | null
+          full_name?: string | null
+          in_person_sessions?: boolean
+          languages?: string | null
+          online_sessions?: boolean
+          presentation?: string | null
+          show_cv?: boolean
+          show_email?: boolean
+          show_location?: boolean
+          show_whatsapp?: boolean
+          specialty?: string | null
+          state?: string | null
+          updated_at?: string
+          user_id: string
+          whatsapp?: string | null
+          years_experience?: number | null
+        }
+        Update: {
+          approach?: string | null
+          city?: string | null
+          contact_email?: string | null
+          council_registration?: string | null
+          created_at?: string
+          cv_filename?: string | null
+          cv_url?: string | null
+          education?: string | null
+          full_name?: string | null
+          in_person_sessions?: boolean
+          languages?: string | null
+          online_sessions?: boolean
+          presentation?: string | null
+          show_cv?: boolean
+          show_email?: boolean
+          show_location?: boolean
+          show_whatsapp?: boolean
+          specialty?: string | null
+          state?: string | null
+          updated_at?: string
+          user_id?: string
+          whatsapp?: string | null
+          years_experience?: number | null
+        }
+        Relationships: []
+      }
       professional_links: {
         Row: {
           created_at: string
@@ -119,8 +197,30 @@ export type Database = {
         }
         Relationships: []
       }
+      professional_private_data: {
+        Row: {
+          cpf: string | null
+          created_at: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          cpf?: string | null
+          created_at?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          cpf?: string | null
+          created_at?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
+          avatar_url: string | null
           bio: string | null
           created_at: string
           id: string
@@ -129,6 +229,7 @@ export type Database = {
           updated_at: string
         }
         Insert: {
+          avatar_url?: string | null
           bio?: string | null
           created_at?: string
           id: string
@@ -137,6 +238,7 @@ export type Database = {
           updated_at?: string
         }
         Update: {
+          avatar_url?: string | null
           bio?: string | null
           created_at?: string
           id?: string
